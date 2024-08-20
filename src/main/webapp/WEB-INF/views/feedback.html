@@ -1,0 +1,58 @@
+<!-- Feedback List -->
+<div th:fragment="feedback-list">
+    <div th:each="feedback : ${feedbackList}" th:if="${!feedbackList.isEmpty()}">
+        <hr>
+        <form th:replace="/update :: update-form"></form>
+    </div>
+    <p th:if="${feedbackList.isEmpty()}">No feedback yet...</p>
+</div>
+
+<!-- Feedback Create Form -->
+<form th:action="@{/feedback/post}" method="POST" th:object="${feedback}" th:fragment="feedback-form">
+    <input type="hidden" th:field="*{id}">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label for="score">Score</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select id="score" th:field="*{score}">
+                    <option th:each="number: ${#numbers.sequence(1,5,1)}" th:value="${number}"
+                            th:text="${number}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="author">Author</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="author" th:field="*{author}">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="feedback">Feedback</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="feedback" th:field="*{feedback}"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="submit" value="Comment">
+            </td>
+        </tr>
+        <input type="hidden" th:field="*{likes}" value=0>
+        </tbody>
+    </table>
+</form>

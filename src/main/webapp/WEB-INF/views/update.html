@@ -1,0 +1,23 @@
+<form th:action="@{/feedback/update}" method="POST" th:fragment="update-form" th:object="${feedback}">
+    <table>
+        <input type="hidden" th:name="'id'" th:value="${feedback.id}">
+        <input type="hidden" th:name="'score'" th:value="${feedback.score}">
+        <input type="hidden" th:name="'author'" th:value="${feedback.author}">
+        <input type="hidden" th:name="'feedback'" th:value="${feedback.feedback}">
+        <input type="hidden" th:name="'likes'" th:value="${feedback.likes + 1}">
+
+        <tbody>
+        <tr>
+            <td th:text="'+'+${feedback.score}"></td>
+            <td th:text="${feedback.author}+': '"></td>
+            <td th:text="${feedback.feedback}"></td>
+        </tr>
+        <tr>
+            <td th:text="${feedback.likes}+' likes'"></td>
+            <td>
+                <input type="submit" value="Like">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

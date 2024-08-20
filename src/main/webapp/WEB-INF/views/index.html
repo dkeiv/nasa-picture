@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Picture Of The Day</title>
+</head>
+<body>
+
+<div>
+    <div style="width: 500px; height: 500px;">
+        <img id="pictureOfTheDay" src="#" alt="picture-of-the-day" style="max-width: 100%">
+    </div>
+</div>
+
+<div th:insert="/feedback :: feedback-form"></div>
+
+<div th:replace="/feedback :: feedback-list"></div>
+
+<script type="text/javascript">
+    (async function () {
+        const apiKey = 'ddI7PvGhHhqSftgWNhh9vTV0oZbUwEVf129LLfBm';
+        const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+        await fetch(url)
+            .then((response) => response.json())
+            .then((data) => setPictureOfTheDay(data))
+            .catch((error) => console.error(error));
+
+        function setPictureOfTheDay(data) {
+            const element = document.getElementById('pictureOfTheDay');
+            element.setAttribute('src', data.url);
+        }
+    })();
+</script>
+</body>
+</html>
