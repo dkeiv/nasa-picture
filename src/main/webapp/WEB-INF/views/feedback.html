@@ -5,11 +5,27 @@
         <form th:replace="/update :: update-form"></form>
     </div>
     <p th:if="${feedbackList.isEmpty()}">No feedback yet...</p>
+
+    <nav>
+        <ul class="pagination">
+            <li th:class="${feedbackList.hasPrevious()} ? 'page-item' : 'page-tiem disabled'">
+                <a th:href="@{/app(page=${feedbackList.number - 1})}" th:class="'page-link'">&lt&lt</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(1, feedbackList.getTotalPages(), 1)}"
+                th:class="${page == (feedbackList.number + 1)}? 'page-item active' : 'page-item'">
+                <a th:class="'page-link'" th:text="${page}" th:href="@{/app(page=${page - 1})}"></a>
+            </li>
+            <li th:class="${feedbackList.hasNext()} ? 'page-item' : 'page-item disabled'">
+                <a th:href="@{/app(page=${feedbackList.number + 1})}" th:class="'page-link'">&gt&gt</a>
+            </li>
+        </ul>
+    </nav>
+
 </div>
 
 <!-- Feedback Create Form -->
 <form th:action="@{/feedback/post}" method="POST" th:object="${feedback}" th:fragment="feedback-form">
-    <input type="hidden" th:field="*{id}">
+    <!--    <input type="hidden" th:field="*{id}">-->
     <table>
         <tbody>
         <tr>
@@ -43,7 +59,7 @@
         </tr>
         <tr>
             <td>
-                <textarea id="feedback" th:field="*{feedback}"></textarea>
+                <textarea id="feedback" th:field="*{comment}"></textarea>
             </td>
         </tr>
 

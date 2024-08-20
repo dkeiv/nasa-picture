@@ -10,7 +10,7 @@ public class Feedback {
     private Long id;
     private int score;
     private String author;
-    private String feedback;
+    private String comment;
     private int likes;
 
     public Feedback() {
@@ -24,12 +24,12 @@ public class Feedback {
         this.likes = likes;
     }
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setComment(String feedback) {
+        this.comment = feedback;
     }
 
-    public String getFeedback() {
-        return feedback;
+    public String getComment() {
+        return comment;
     }
 
     public String getAuthor() {

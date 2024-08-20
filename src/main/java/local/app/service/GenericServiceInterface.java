@@ -1,13 +1,16 @@
 package local.app.service;
 
+import local.app.model.Feedback;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface GenericServiceInterface<T> {
-    List<T> findAll();
-
-    T findById(int id);
 
     void save(T t);
 
-    void delete(T t);
+    Page<T> findAll(Pageable pageable);
+
+    T findById(Long id);
 }

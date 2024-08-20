@@ -1,14 +1,11 @@
 package local.app.service;
 
 import local.app.model.Feedback;
-import local.app.repository.FeedbackRepository;
 import local.app.repository.FeedbackRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.List;
-
 
 @Service
 public class FeedbackService implements FeedbackServiceInterface {
@@ -16,22 +13,17 @@ public class FeedbackService implements FeedbackServiceInterface {
     private FeedbackRepositoryInterface feedbackRepositoryInterface;
 
     @Override
-    public void delete(Feedback feedback) {
-
-    }
-
-    @Override
-    public List<Feedback> findAll() {
-        return feedbackRepositoryInterface.findAll();
-    }
-
-    @Override
-    public Feedback findById(int id) {
-        return null;
-    }
-
-    @Override
     public void save(Feedback feedback) {
         feedbackRepositoryInterface.save(feedback);
+    }
+
+    @Override
+    public Page<Feedback> findAll(Pageable pageable) {
+        return feedbackRepositoryInterface.findAll(pageable);
+    }
+
+    @Override
+    public Feedback findById(Long id) {
+        return feedbackRepositoryInterface.findById(id).get();
     }
 }
