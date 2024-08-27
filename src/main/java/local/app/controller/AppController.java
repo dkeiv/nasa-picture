@@ -1,6 +1,7 @@
 package local.app.controller;
 
 
+import local.app.exception.BadWordException;
 import local.app.model.Feedback;
 import local.app.service.FeedbackServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,22 @@ public class AppController {
     }
 
     @PostMapping("/feedback/post")
-    public String feedback(@ModelAttribute("feedback") Feedback feedback) {
+    public String feedback(@ModelAttribute("feedback") Feedback feedback) throws BadWordException {
         feedbackService.save(feedback);
         return "redirect:/app";
     }
 
     @PostMapping("/feedback/{id}/like")
-    public String feedbackLike(@ModelAttribute("feedback") Feedback feedback, RedirectAttributes redirectAttributes) {
+    public String feedbackLike(@ModelAttribute("feedback") Feedback feedback) throws BadWordException {
         Feedback feedbackLiked = feedbackService.findById(feedback.getId());
         feedbackLiked.setLikes(feedbackLiked.getLikes() + 1);
         feedbackService.save(feedbackLiked);
         return "redirect:/app";
     }
 
-
+    @ExceptionHandler(BadWordException.class)
+    public String badWordIsNotExcepted(RedirectAttributes redirectAttributes, BadWordException e) {
+        redirectAttributes.addFlashAttribute("message", e.getMessage());
+        return "redirect:/app";
+    }
 }
